@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ConfirmationController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::middleware('auth:sanctum')->group( function() {
+    Route::post('/save', [ConfirmationController::class, 'saveUser']);
+    Route::post('/send', [ConfirmationController::class, 'send']);
+    Route::post('/verify', [ConfirmationController::class, 'verify']);
+});
+
+Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,10');

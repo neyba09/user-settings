@@ -1,6 +1,6 @@
 # Изменение настроек личного кабинета пользователя
 
-Laravel 10, Vue3, L5-SWAGGER, TWILIO, @VerifyAssistantBot
+Laravel 10, L5-SWAGGER, TWILIO, @VerifyAssistantBot
 
 ## Requirements
 - PHP v8

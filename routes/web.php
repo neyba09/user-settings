@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\SendNotificationController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/telegram/get-chat-id', [SendNotificationController::class, 'getTelegramChat'])->middleware('auth');
+
+Route::post('/send-confirmation-code', [SendNotificationController::class, 'sendConfirmationCode'])->middleware('auth');
+

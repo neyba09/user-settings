@@ -1,0 +1,254 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation",
+        "contact": {
+            "email": "zubankovaanastasia26@gmail.com"
+        },
+        "version": "3.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8084",
+            "description": "API Server"
+        }
+    ],
+    "paths": {
+        "/api/send": {
+            "post": {
+                "tags": [
+                    "Confirmation"
+                ],
+                "summary": "Отправить код подтверждения",
+                "description": "Отправка кода подтверждения пользователю",
+                "operationId": "e864ff146c0a09c67b15b6b3602f950c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "method": {
+                                        "type": "string",
+                                        "example": "sms"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Код подтверждения отправлен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Confirmation code sent"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/verify": {
+            "post": {
+                "tags": [
+                    "Confirmation"
+                ],
+                "summary": "Проверить код подтверждения",
+                "description": "Проверка кода подтверждения",
+                "operationId": "b257a340ff1f6e93d2bae53c762f1c1b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "example": "12345"
+                                    },
+                                    "method": {
+                                        "type": "string",
+                                        "example": "sms"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Код успешно проверен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Code verified successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Неверный код подтверждения",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid confirmation code"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/save": {
+            "post": {
+                "tags": [
+                    "Confirmation"
+                ],
+                "summary": "Сохранить пользователя",
+                "description": "Сохранение пользователя",
+                "operationId": "682464d258fd89823f98e70f8b366320",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "method": {
+                                        "type": "string",
+                                        "example": "telegram"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Метод подтверждения сохранен"
+                    },
+                    "204": {
+                        "description": "Нет контента"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Авторизация, заполнение формы"
+                ],
+                "summary": "Авторизация пользователя",
+                "operationId": "authUser",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Пароль пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ValidateLoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ValidateLoginRequest": {
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "description": "Email пользователя",
+                        "type": "string",
+                        "example": "egorov@mail.ru"
+                    },
+                    "password": {
+                        "description": "Пароль",
+                        "type": "string",
+                        "example": "123QWEqwe1!"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Confirmation",
+            "description": "Confirmation"
+        },
+        {
+            "name": "Авторизация, заполнение формы",
+            "description": "Авторизация, заполнение формы"
+        }
+    ]
+}
